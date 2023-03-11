@@ -1,6 +1,13 @@
-package com.interview.app.ws.interview.ui.controller;
+package com.interview.app.ws.ui.controller;
 
+import com.interview.app.ws.model.response.UserRest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;//import of CRUD annotations
+
+import java.awt.*;
 
 @RestController
 @RequestMapping("users") //http://localhost:8081/users
@@ -15,11 +22,20 @@ public class UserController {
         return "page "+ page + " limit " + limit + " sort " + sort;
     }
 
-    @GetMapping(path="/{userId}")
+    @GetMapping(path="/{userId}", produces = {
+            MediaType.APPLICATION_XML_VALUE ,   //return XML
+            MediaType.APPLICATION_JSON_VALUE})  //or return JSON
+            //in request set Accept application/xml or application/json
     //annotation //url http://localhost:8081/users/userId GET
-    public String getUser(@PathVariable String userId)
+    public ResponseEntity getUser(@PathVariable String userId)
     {
-        return userId + " was called";
+        //        return new UserRest("Hugo","Resende","h@r.com",userId);
+        if (userId.equals("bad")){
+            return new ResponseEntity("BAD REQUEST TEST",HttpStatus.BAD_REQUEST);
+        }
+        UserRest user = new UserRest(userId+"firstName",userId+"lastName",userId,userId+"@"+userId+".com");
+        return new ResponseEntity<UserRest>(user,HttpStatus.OK);
+
     }
 
     @PostMapping//annotation to be post request //url http://localhost:8081/users POST

@@ -1,4 +1,4 @@
-package com.interview.app.ws.interview;
+package com.interview.app.ws;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
