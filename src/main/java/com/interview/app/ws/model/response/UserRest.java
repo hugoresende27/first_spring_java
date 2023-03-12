@@ -1,11 +1,14 @@
 package com.interview.app.ws.model.response;
 
+import java.util.Map;
+
 public class UserRest {
+
 
     private String firstName;
     private String lastName;
     private String userId;
-
+    private String email;
     public UserRest(String firstName, String lastName, String userId, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -13,7 +16,7 @@ public class UserRest {
         this.email = email;
     }
 
-    private String email;
+
 
     public String getEmail() {
         return email;
