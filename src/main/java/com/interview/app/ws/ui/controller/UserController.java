@@ -1,5 +1,6 @@
 package com.interview.app.ws.ui.controller;
 
+import com.interview.app.ws.exeptions.UserServiceException;
 import com.interview.app.ws.model.request.UpdateUserDetailsRequestModel;
 import com.interview.app.ws.model.request.UserDetailsRequestModel;
 import com.interview.app.ws.model.response.UserRest;
@@ -51,13 +52,15 @@ public class UserController {
     public ResponseEntity getUser(@PathVariable String userId)
     {
         // handle exception with custom message
-        String firstName = null;
-        int firstNameLegth = firstName.length();
+         String firstName = null;
+         int firstNameLegth = firstName.length();
         /*
             <timestamp>2023-03-12T12:19:46.835+00:00</timestamp>
             <message>Cannot invoke "String.length()" because "firstName" is null</message>
          */
         //        return new UserRest("Hugo","Resende","h@r.com",userId);
+
+        if (true) throw new UserServiceException("A user service exception is thrown");
         if (userId.equals("bad")){
             return new ResponseEntity<>("BAD REQUEST TEST",HttpStatus.BAD_REQUEST);
         }
