@@ -5,7 +5,10 @@ import com.interview.app.ws.model.request.UpdateUserDetailsRequestModel;
 import com.interview.app.ws.model.request.UserDetailsRequestModel;
 import com.interview.app.ws.model.response.UserRest;
 
+import com.interview.app.ws.userservice.UserService;
+import com.interview.app.ws.userservice.implementations.UserServiceImpl;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,9 @@ public class UserController {
 
 
     Map<String, UserRest> users;
+
+    @Autowired  //to create an instance of UserService and inject also autowired in UserServiceImpl
+    UserService userService;
 
 
 
@@ -52,15 +58,15 @@ public class UserController {
     public ResponseEntity getUser(@PathVariable String userId)
     {
         // handle exception with custom message
-         String firstName = null;
-         int firstNameLegth = firstName.length();
+//         String firstName = null;
+//         int firstNameLegth = firstName.length();
         /*
             <timestamp>2023-03-12T12:19:46.835+00:00</timestamp>
             <message>Cannot invoke "String.length()" because "firstName" is null</message>
          */
         //        return new UserRest("Hugo","Resende","h@r.com",userId);
 
-        if (true) throw new UserServiceException("A user service exception is thrown");
+//        if (true) throw new UserServiceException("A user service exception is thrown");
         if (userId.equals("bad")){
             return new ResponseEntity<>("BAD REQUEST TEST",HttpStatus.BAD_REQUEST);
         }
@@ -96,17 +102,21 @@ public class UserController {
 
     public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetails)
     {
-        UserRest user = new UserRest(
-                userDetails.getFirstName(),
-                userDetails.getLastName(),
-                userDetails.getPassword(),
-                userDetails.getEmail());
+//        UserRest user = new UserRest(
+//                userDetails.getFirstName(),
+//                userDetails.getLastName(),
+//                userDetails.getPassword(),
+//                userDetails.getEmail());
+//
+//        String userId = UUID.randomUUID().toString();
+//        user.setUserId(userId);
+//
+//        if (this.users == null) this.users = new HashMap<>();
+//        this.users.put(userId,user);
 
-        String userId = UUID.randomUUID().toString();
-        user.setUserId(userId);
+//        UserRest user = new UserServiceImpl().createUser(userDetails);
 
-        if (this.users == null) this.users = new HashMap<>();
-        this.users.put(userId,user);
+        UserRest user = userService.createUser(userDetails);
 
         return new ResponseEntity<UserRest>(user,HttpStatus.OK);
 
